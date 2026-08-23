@@ -467,6 +467,9 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<string>("Motivo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("RestoDoDia")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
