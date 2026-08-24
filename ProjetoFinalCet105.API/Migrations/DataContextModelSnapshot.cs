@@ -229,6 +229,42 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.ToTable("Conversas");
                 });
 
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.DispositivoUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Fid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Plataforma")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DispositivosUsers");
+                });
+
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.EstadoMarcacao", b =>
                 {
                     b.Property<int>("Id")
@@ -815,6 +851,17 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("Funcionario");
+                });
+
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.DispositivoUser", b =>
+                {
+                    b.HasOne("ProjetoFinalCet105.API.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.Feedback", b =>
