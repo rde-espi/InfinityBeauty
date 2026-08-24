@@ -507,6 +507,12 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Lembrete24hEnviado")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Lembrete30MinEnviado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
 
