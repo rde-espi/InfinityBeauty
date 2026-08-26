@@ -776,6 +776,9 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<string>("FotografiaUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Localidade")
                         .HasColumnType("nvarchar(max)");
 
