@@ -552,11 +552,20 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("PercentagemDescontoAplicada")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("PromoCodeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ServicoId")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("ValorDesconto")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -565,6 +574,8 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.HasIndex("EstadoMarcacaoId");
 
                     b.HasIndex("FuncionarioId");
+
+                    b.HasIndex("PromoCodeId");
 
                     b.HasIndex("ServicoId");
 
@@ -642,6 +653,44 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notificacoes");
+                });
+
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.PromoCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LimiteUtilizacoes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumeroUtilizacoes")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PercentagemDesconto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PromoCodes");
                 });
 
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.Servico", b =>
@@ -1001,6 +1050,10 @@ namespace ProjetoFinalCet105.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProjetoFinalCet105.API.Entities.PromoCode", "PromoCode")
+                        .WithMany()
+                        .HasForeignKey("PromoCodeId");
+
                     b.HasOne("ProjetoFinalCet105.API.Entities.Servico", "Servico")
                         .WithMany()
                         .HasForeignKey("ServicoId")
@@ -1012,6 +1065,8 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Navigation("EstadoMarcacao");
 
                     b.Navigation("Funcionario");
+
+                    b.Navigation("PromoCode");
 
                     b.Navigation("Servico");
                 });
