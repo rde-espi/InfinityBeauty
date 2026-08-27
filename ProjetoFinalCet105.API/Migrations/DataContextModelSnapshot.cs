@@ -416,6 +416,85 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.ToTable("FuncionariosServicos");
                 });
 
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.GoogleCalendarConta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CalendarId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GoogleEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("GoogleCalendarContas");
+                });
+
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.GoogleCalendarEvento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CalendarId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUltimaSincronizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GoogleEventId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MarcacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("MarcacaoId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("GoogleCalendarEventos");
+                });
+
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.HistoricoMarcacao", b =>
                 {
                     b.Property<int>("Id")
@@ -990,6 +1069,36 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Navigation("Funcionario");
 
                     b.Navigation("Servico");
+                });
+
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.GoogleCalendarConta", b =>
+                {
+                    b.HasOne("ProjetoFinalCet105.API.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjetoFinalCet105.API.Entities.GoogleCalendarEvento", b =>
+                {
+                    b.HasOne("ProjetoFinalCet105.API.Entities.Marcacao", "Marcacao")
+                        .WithMany()
+                        .HasForeignKey("MarcacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoFinalCet105.API.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Marcacao");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.HistoricoMarcacao", b =>
