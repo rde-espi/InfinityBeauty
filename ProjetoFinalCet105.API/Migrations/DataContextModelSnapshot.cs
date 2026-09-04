@@ -960,9 +960,14 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<bool>("Revogada")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RevogadaPorUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConcedidoPorUserId");
+
+                    b.HasIndex("RevogadaPorUserId");
 
                     b.HasIndex("FuncionarioUserId", "DataFim", "Revogada");
 
@@ -1484,9 +1489,16 @@ namespace ProjetoFinalCet105.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProjetoFinalCet105.API.Entities.User", "RevogadaPorUser")
+                        .WithMany()
+                        .HasForeignKey("RevogadaPorUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("ConcedidoPorUser");
 
                     b.Navigation("FuncionarioUser");
+
+                    b.Navigation("RevogadaPorUser");
                 });
 
             modelBuilder.Entity("ProjetoFinalCet105.API.Entities.Servico", b =>
