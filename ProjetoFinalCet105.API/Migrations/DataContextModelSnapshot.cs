@@ -169,6 +169,12 @@ namespace ProjetoFinalCet105.API.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("Imagem")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImagemContentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
